@@ -1,19 +1,27 @@
 const myLibrary = [];
 
-function Book(title, author, numberOfPages) {
+function Book(title, author, numberOfPages, isBookRead) {
     // the constructor...
     this.id = crypto.randomUUID();
     this.title = title;
     this.author = author;
     this.numberOfPages = numberOfPages;
+    this.isBookRead = isBookRead;
     this.info = function() {
-        return `${this.title} by ${this.author}, ${this.numberOfPages} pages`;
+        let infoSentence = `${this.title} by ${this.author}, ${this.numberOfPages} pages, `;
+        if (this.isBookRead) {
+            infoSentence += "has been read";
+        } else {
+            infoSentence += "not read yet";
+        }
+
+        return infoSentence;
     };
 }
 
-function addBookToLibrary(title, author, numberOfPages) {
+function addBookToLibrary(title, author, numberOfPages, isBookRead) {
     // take params, create a book then store it in the array
-    const newBook = new Book(title, author, numberOfPages);
+    const newBook = new Book(title, author, numberOfPages, isBookRead);
     myLibrary.push(newBook);
 }
 
