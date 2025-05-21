@@ -30,3 +30,10 @@ function displayBooks(library) {
         console.log(book.info());
     }
 }
+
+const addBookButton = document.querySelector(".new-book-button");
+const formModal = document.querySelector("dialog:has(form)");
+
+addBookButton.addEventListener("click", () => {
+    formModal.showModal();
+});

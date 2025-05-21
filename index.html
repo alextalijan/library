@@ -8,6 +8,29 @@
     <title>Library</title>
   </head>
   <body>
-    
+    <button type="button" class="new-book-button">New Book</button>
+    <dialog>
+      <form action="index.html" method="post">
+        <div>
+          <label for="bookTitle">Title</label>
+          <input id="bookTitle" type="text">
+        </div>
+        <div>
+          <label for="bookAuthor">Author</label>
+          <input id="bookAuthor" type="text">
+        </div>
+        <div>
+          <label for="numberOfPages">Number of Pages</label>
+          <input id="numberOfPages" type="number" min="1">
+        </div>
+        <div>
+          <input id="isBookRead" type="checkbox">
+          <label for="isBookRead">I have read the book</label>
+        </div>
+        <div>
+          <button class="add-book-button">Add Book</button>
+        </div>
+      </form>
+    </dialog>
   </body>
 </html>
