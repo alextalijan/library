@@ -1,33 +1,49 @@
 const myLibrary = [];
 
 function Book(title, author, numberOfPages, isBookRead) {
-    // the constructor...
     this.id = crypto.randomUUID();
     this.title = title;
     this.author = author;
     this.numberOfPages = numberOfPages;
     this.isBookRead = isBookRead;
-    this.info = function() {
-        let infoSentence = `${this.title} by ${this.author}, ${this.numberOfPages} pages, `;
-        if (this.isBookRead) {
-            infoSentence += "has been read";
-        } else {
-            infoSentence += "not read yet";
-        }
-
-        return infoSentence;
-    };
 }
 
 function addBookToLibrary(title, author, numberOfPages, isBookRead) {
-    // take params, create a book then store it in the array
+    // Create a new book then store it in the array
     const newBook = new Book(title, author, numberOfPages, isBookRead);
     myLibrary.push(newBook);
 }
 
 function displayBooks(library) {
+    // Clear the table first, then iterate over all books
+    booksTable = document.querySelector(".books-table > tbody");
+    booksTable.innerHTML = "";
+
     for (const book of library) {
-        console.log(book.info());
+        const newBookRow = document.createElement("tr");
+        // Iterate over properties of the book and add them to the table
+        for (const property in book) {
+            const newBookDataColumn = document.createElement("td");
+
+            // If the property of a book is known, add it as a column
+            // Else if the property is about book being read, empty value means it hasn't
+            // Else the value of that property is unknown
+            if (book[property] && property !== "isBookRead") {
+                newBookDataColumn.textContent = book[property];
+            } else if (property === "isBookRead") {
+                if (book.isBookRead === true) {
+                    newBookDataColumn.textContent = "Yes";
+                } else {
+                    newBookDataColumn.textContent = "No";
+                }
+            } else {
+                newBookDataColumn.textContent = "Unknown";
+            }
+
+            newBookRow.appendChild(newBookDataColumn);
+        }
+
+        booksTable.appendChild(newBookRow);
     }
 }
 
@@ -54,6 +70,7 @@ addBookButton.addEventListener("click", (event) => {
     formModal.close();
     bookForm.reset();
 
-    // Show the new book on the web page
-    
+    // Add new book to the library and display all books in a table
+    addBookToLibrary(newBookTitle, newBookAuthor, newBookPagesNumber, isNewBookRead);
+    displayBooks(myLibrary);
 })
