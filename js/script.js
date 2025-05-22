@@ -1,5 +1,6 @@
 const myLibrary = [];
 
+// Create a book object
 function Book(title, author, numberOfPages, isBookRead) {
     this.id = crypto.randomUUID();
     this.title = title;
@@ -8,6 +9,7 @@ function Book(title, author, numberOfPages, isBookRead) {
     this.isBookRead = isBookRead;
 }
 
+// Add a method to the book prototype for toggling the read status
 Book.prototype.toggleReadStatus = function() {
     if (this.isBookRead === true) {
         this.isBookRead = false;
@@ -22,10 +24,10 @@ Object.defineProperty(Book.prototype, 'toggleReadStatus', {
   enumerable: false,
 });
 
-function addBookToLibrary(title, author, numberOfPages, isBookRead) {
-    // Create a new book then store it in the array
+// Create a new book then store it in the library array
+function addBookToLibrary(title, author, numberOfPages, isBookRead, library) {
     const newBook = new Book(title, author, numberOfPages, isBookRead);
-    myLibrary.push(newBook);
+    library.push(newBook);
 }
 
 function displayBooks(library) {
@@ -35,7 +37,7 @@ function displayBooks(library) {
 
     for (const book of library) {
         const newBookRow = document.createElement("tr");
-        // Iterate over properties of the book and add them to the table
+        // Iterate over properties of the book to add them to the table
         for (const property in book) {
             const newBookDataColumn = document.createElement("td");
 
@@ -44,7 +46,8 @@ function displayBooks(library) {
             // Else the value of that property is unknown
             if (book[property] && property !== "isBookRead") {
                 newBookDataColumn.textContent = book[property];
-            } else if (property === "isBookRead") {
+            }
+            else if (property === "isBookRead") {
                 if (book.isBookRead === true) {
                     newBookDataColumn.textContent = "Yes";
                 } else {
@@ -68,18 +71,19 @@ function displayBooks(library) {
                 });
 
                 newBookDataColumn.appendChild(toggleReadStatusButton);
-            } else {
+            }
+            else {
                 newBookDataColumn.textContent = "Unknown";
             }
 
             newBookRow.appendChild(newBookDataColumn);
         }
 
-        // Last column contains a button to remove the book from the library
+        // Create button that will be the last column in a row for removing a book
         const removeBookButton = document.createElement("button");
         const removeButtonTableColumn = document.createElement("td");
 
-        // Add all relevant attributes to the button and append it to the row
+        // Add all relevant attributes to the button
         removeBookButton.type = "button";
         removeBookButton.innerText = "Remove Book";
         removeBookButton.dataAttribute = book.id;
@@ -95,6 +99,7 @@ function displayBooks(library) {
             }
         });
 
+        // Append the button to the row
         removeButtonTableColumn.appendChild(removeBookButton);
         newBookRow.appendChild(removeButtonTableColumn);
 
@@ -102,6 +107,7 @@ function displayBooks(library) {
     }
 }
 
+// Create button for showing form modal on the screen
 const newBookButton = document.querySelector(".new-book-button");
 const formModal = document.querySelector("dialog:has(form)");
 
@@ -126,6 +132,6 @@ addBookButton.addEventListener("click", (event) => {
     bookForm.reset();
 
     // Add new book to the library and display all books in a table
-    addBookToLibrary(newBookTitle, newBookAuthor, newBookPagesNumber, isNewBookRead);
+    addBookToLibrary(newBookTitle, newBookAuthor, newBookPagesNumber, isNewBookRead, myLibrary);
     displayBooks(myLibrary);
 })
