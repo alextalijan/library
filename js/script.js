@@ -31,9 +31,29 @@ function displayBooks(library) {
     }
 }
 
-const addBookButton = document.querySelector(".new-book-button");
+const newBookButton = document.querySelector(".new-book-button");
 const formModal = document.querySelector("dialog:has(form)");
 
-addBookButton.addEventListener("click", () => {
+newBookButton.addEventListener("click", () => {
     formModal.showModal();
 });
+
+const bookForm = document.querySelector("dialog > form");
+const addBookButton = document.querySelector(".add-book-button");
+addBookButton.addEventListener("click", (event) => {
+    // Stop the form from submitting to the server
+    event.preventDefault();
+
+    // Save data from the form
+    const newBookTitle = document.querySelector("#bookTitle").value;
+    const newBookAuthor = document.querySelector("#bookAuthor").value;
+    const newBookPagesNumber = document.querySelector("#numberOfPages").value;
+    const isNewBookRead = document.querySelector("#isBookRead").checked;
+
+    // Close the modal and clear the form
+    formModal.close();
+    bookForm.reset();
+
+    // Show the new book on the web page
+    
+})
