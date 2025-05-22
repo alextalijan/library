@@ -8,6 +8,14 @@ function Book(title, author, numberOfPages, isBookRead) {
     this.isBookRead = isBookRead;
 }
 
+Book.prototype.toggleReadStatus = function() {
+    if (this.isBookRead === true) {
+        this.isBookRead = false;
+    } else {
+        this.isBookRead = true;
+    }
+};
+
 function addBookToLibrary(title, author, numberOfPages, isBookRead) {
     // Create a new book then store it in the array
     const newBook = new Book(title, author, numberOfPages, isBookRead);
@@ -36,6 +44,14 @@ function displayBooks(library) {
                 } else {
                     newBookDataColumn.textContent = "No";
                 }
+
+                // Add a button to change the read status of the book
+                const toggleReadStatusButton = document.createElement("button");
+                toggleReadStatusButton.type = "button";
+                toggleReadStatusButton.innerText = "Change";
+                toggleReadStatusButton.addEventListener("click", (event) => {
+                    
+                })
             } else {
                 newBookDataColumn.textContent = "Unknown";
             }
@@ -50,15 +66,13 @@ function displayBooks(library) {
         // Add all relevant attributes to the button and append it to the row
         removeBookButton.type = "button";
         removeBookButton.innerText = "Remove Book";
-        // Add logic to remove the book from the row
-        removeBookButton.addEventListener("click", () => {
-            // Get the row of the book trying to be removed and capture its ID
-            const bookRow = removeBookButton.parentNode.parentNode;
-            const bookId = bookRow.firstElementChild.innerText;
+        removeBookButton.dataAttribute = book.id;
 
+        // Add logic to remove the book from the row
+        removeBookButton.addEventListener("click", (event) => {
             // Remove the book with that book ID from the library array
             for (let i = 0; i < library.length; i++) {
-                if (library[i].id === bookId) {
+                if (library[i].id === event.target.dataAttribute) {
                     library.splice(i, 1);
                     displayBooks(library);
                     break;
