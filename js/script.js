@@ -43,6 +43,32 @@ function displayBooks(library) {
             newBookRow.appendChild(newBookDataColumn);
         }
 
+        // Last column contains a button to remove the book from the library
+        const removeBookButton = document.createElement("button");
+        const removeButtonTableColumn = document.createElement("td");
+
+        // Add all relevant attributes to the button and append it to the row
+        removeBookButton.type = "button";
+        removeBookButton.innerText = "Remove Book";
+        // Add logic to remove the book from the row
+        removeBookButton.addEventListener("click", () => {
+            // Get the row of the book trying to be removed and capture its ID
+            const bookRow = removeBookButton.parentNode.parentNode;
+            const bookId = bookRow.firstElementChild.innerText;
+
+            // Remove the book with that book ID from the library array
+            for (let i = 0; i < library.length; i++) {
+                if (library[i].id === bookId) {
+                    library.splice(i, 1);
+                    displayBooks(library);
+                    break;
+                }
+            }
+        });
+
+        removeButtonTableColumn.appendChild(removeBookButton);
+        newBookRow.appendChild(removeButtonTableColumn);
+
         booksTable.appendChild(newBookRow);
     }
 }
