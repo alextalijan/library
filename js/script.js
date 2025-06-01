@@ -1,28 +1,24 @@
 const myLibrary = [];
 
-// Create a book object
-function Book(title, author, numberOfPages, isBookRead) {
-    this.id = crypto.randomUUID();
-    this.title = title;
-    this.author = author;
-    this.numberOfPages = numberOfPages;
-    this.isBookRead = isBookRead;
-}
-
-// Add a method to the book prototype for toggling the read status
-Book.prototype.toggleReadStatus = function() {
-    if (this.isBookRead === true) {
-        this.isBookRead = false;
-    } else {
-        this.isBookRead = true;
+// Create a book class
+class Book {
+    constructor(title, author, numberOfPages, isBookRead) {
+        this.id = crypto.randomUUID();
+        this.title = title;
+        this.author = author;
+        this.numberOfPages = numberOfPages;
+        this.isBookRead = isBookRead;
     }
-};
 
-// Make it impossible for toggleReadStatus() method to appear while iterating over properties
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty
-Object.defineProperty(Book.prototype, 'toggleReadStatus', {
-  enumerable: false,
-});
+    // Add a method to the book prototype for toggling the read status
+    toggleReadStatus() {
+        if (this.isBookRead === true) {
+            this.isBookRead = false;
+        } else {
+            this.isBookRead = true;
+        }
+    }
+}
 
 // Create a new book then store it in the library array
 function addBookToLibrary(title, author, numberOfPages, isBookRead, library) {
