@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/styles.css">
-    <script src="./js/script.js" defer></script>
+    <script src="./js/script.js" type="module"></script>
     <title>Library</title>
   </head>
   <body>
@@ -25,22 +25,22 @@
       <form action="index.html" method="post">
         <div>
           <label for="bookTitle">Title</label>
-          <input id="bookTitle" type="text" name="bookTitle">
+          <input id="bookTitle" type="text" name="bookTitle" required>
         </div>
         <div>
           <label for="bookAuthor">Author</label>
-          <input id="bookAuthor" type="text" name="bookAuthor">
+          <input id="bookAuthor" type="text" name="bookAuthor" required>
         </div>
         <div>
           <label for="numberOfPages">Number of Pages</label>
-          <input id="numberOfPages" name="numberOfPages" type="number" min="1">
+          <input id="numberOfPages" name="numberOfPages" type="number" min="1" required>
         </div>
         <div>
           <input id="isBookRead" name="isBookRead" type="checkbox">
           <label for="isBookRead">I have read the book</label>
         </div>
         <div>
-          <button class="add-book-button">Add Book</button>
+          <button type="submit" class="add-book-button">Add Book</button>
         </div>
       </form>
     </dialog>

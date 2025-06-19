@@ -28,7 +28,7 @@ function addBookToLibrary(title, author, numberOfPages, isBookRead, library) {
 
 function displayBooks(library) {
     // Clear the table first, then iterate over all books
-    booksTable = document.querySelector(".books-table > tbody");
+    const booksTable = document.querySelector(".books-table > tbody");
     booksTable.innerHTML = "";
 
     for (const book of library) {
@@ -114,20 +114,42 @@ newBookButton.addEventListener("click", () => {
 const bookForm = document.querySelector("dialog > form");
 const addBookButton = document.querySelector(".add-book-button");
 addBookButton.addEventListener("click", (event) => {
-    // Stop the form from submitting to the server
+    // // Stop the form from submitting to the server
     event.preventDefault();
 
-    // Save data from the form
-    const newBookTitle = document.querySelector("#bookTitle").value;
-    const newBookAuthor = document.querySelector("#bookAuthor").value;
-    const newBookPagesNumber = document.querySelector("#numberOfPages").value;
-    const isNewBookRead = document.querySelector("#isBookRead").checked;
+    // Check if all inputs have been given
+    const newBookTitle = document.querySelector("#bookTitle");
+    const newBookAuthor = document.querySelector("#bookAuthor");
+    const newBookPagesNumber = document.querySelector("#numberOfPages");
 
-    // Close the modal and clear the form
-    formModal.close();
-    bookForm.reset();
+    // Clear out any previous error messages
+    newBookTitle.setCustomValidity('');
+    newBookAuthor.setCustomValidity('');
+    newBookPagesNumber.setCustomValidity('');
 
-    // Add new book to the library and display all books in a table
-    addBookToLibrary(newBookTitle, newBookAuthor, newBookPagesNumber, isNewBookRead, myLibrary);
-    displayBooks(myLibrary);
+    if (!newBookTitle.checkValidity()) {
+        newBookTitle.setCustomValidity('Please enter the title of the book');
+        newBookTitle.reportValidity();
+    } else if (!newBookAuthor.checkValidity()) {
+        newBookAuthor.setCustomValidity('There must be an author of the book included.');
+        newBookAuthor.reportValidity();
+    } else if (!newBookPagesNumber.checkValidity()) {
+        if (newBookPagesNumber.validity.rangeUnderflow) {
+            newBookPagesNumber.setCustomValidity('The book has to have at least 1 page.');
+        } else {
+            newBookPagesNumber.setCustomValidity('Please input the number of pages.');
+        }
+
+        newBookPagesNumber.reportValidity();
+    } else {
+        const isNewBookRead = document.querySelector("#isBookRead").checked;
+
+        // Add new book to the library and display all books in a table
+        addBookToLibrary(newBookTitle.value, newBookAuthor.value, newBookPagesNumber.value, isNewBookRead, myLibrary);
+        displayBooks(myLibrary);
+
+        // Close the modal and clear the form
+        formModal.close();
+        bookForm.reset();
+    }
 })
